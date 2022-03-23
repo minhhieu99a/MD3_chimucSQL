@@ -24,3 +24,45 @@ CREATE PROCEDURE findAllCustomers()
 BEGIN
     SELECT *FROM customers WHERE customerNumber=175;
 end $$
+
+# Store ProcedureINOUT
+
+DELIMITER $$
+CREATE PROCEDURE getCusById(IN cusNum INT(11))
+BEGIN
+    SELECT *FROM customers WHERE customerNumber =cusNum;
+end $$
+
+call getCusById(175);
+
+DELIMITER $$
+CREATE PROCEDURE getCusCountByCity(
+IN in_city VARCHAR(50),
+OUT  total INT
+)
+BEGIN
+    SELECT count(customerNumber)
+        INTO total
+    FROM customers
+        WHERE city =in_city;
+end $$
+
+CALL getCusCountByCity('Lyon',@total);
+
+SELECT @total;
+
+# Inout
+DELIMITER $$
+CREATE PROCEDURE SetCounter(
+INOUT counter INT,
+IN inc INT
+)
+BEGIN
+    SET counter =counter+inc;
+end $$
+
+SET @counter =1;
+CALL SetCounter(@counter,1);
+CALL SetCounter(@counter,4);
+CALL SetCounter(@counter,3);
+SELECT @counter;
