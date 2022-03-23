@@ -66,3 +66,15 @@ CALL SetCounter(@counter,1);
 CALL SetCounter(@counter,4);
 CALL SetCounter(@counter,3);
 SELECT @counter;
+
+
+# view
+Create VIEW customer_views AS
+    SELECT customerNumber,customerName,phone
+FROM customers;
+SELECT *from customer_views;
+
+CREATE OR REPLACE VIEW customer_views As
+    SELECT customerNumber, customerName, contactFirstName, contactLastName, phone
+from customers
+WHERE city ='Nantes';
